@@ -1,0 +1,329 @@
+### Variables
+#
+# Logo key. Use Mod1 for Alt.
+set $mod Mod1
+set $modd Mod5
+# Home row direction keys, like vim
+set $left s
+set $down d
+set $up e
+set $right f
+# Your preferred terminal emulator
+set $term foot
+# Your preferred application launcher
+# Note: pass the final command to swaymsg so that the resulting window can be opened
+# on the original workspace that the command was run on.
+set $menu dmenu_path | dmenu | xargs swaymsg exec --
+
+### Output configuration
+#
+# Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
+output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#
+# exec swayidle -w \
+#          timeout 300 'swaylock -f -c 000000' \
+#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          before-sleep 'swaylock -f -c 000000'
+#
+# This will lock your screen after 300 seconds of inactivity, then turn off
+# your displays after another 300 seconds, and turn your screens back on when
+# resumed. It will also lock your screen before your computer goes to sleep.
+
+### Input configuration
+#
+input * {
+    xkb_layout "gb"
+}
+
+#input Microsoft Surface Type Cover Touchpad {
+input type:touchpad {
+    	tap enabled
+        natural_scroll enabled
+        dwt enabled
+        accel_profile adaptive # (("adaptive"/ "flat")
+        pointer_accel 0 # (between -1 and 1)
+}
+
+#input Microsoft Arc Mouse {
+input type:pointer {
+        accel_profile flat # ("adaptive"/"flat")
+       	pointer_accel -0.5 # (between -1 and 1)
+}
+
+
+	#Clamshell Mode
+set $laptop <laptop_output_identifier>
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+# volume control keys
+bindsym --locked XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym --locked XF86AudioLowerVolume exec pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym --locked XF86AudioRaiseVolume exec pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+# screen backlight, first set min and restore previous
+exec light -N 1
+exec light -I
+bindsym --locked XF86MonBrightnessUp exec light -T 1.4
+bindsym --locked XF86MonBrightnessDown exec light -T 0.72
+# keyboard backlight
+bindsym XF86KbdBrightnessUp   exec "light -S 100 -s sysfs/leds/spi::kbd_backlight"
+bindsym XF86KbdBrightnessDown exec "light -S 0   -s sysfs/leds/spi::kbd_backlight"
+
+# You can get the names of your inputs by running: swaymsg -t get_inputs
+# Read `man 5 sway-input` for more information about this section.
+
+### Key bindings
+#
+# Basics:
+#
+    # Start a terminal
+    bindsym $mod+Return exec $term
+    bindsym $modd+Return exec $term
+
+    # Kill focused window
+    bindsym $mod+Shift+q kill
+    bindsym $modd+Shift+q kill
+
+    # Start your launcher
+    bindsym $mod+l exec $menu
+    bindsym $modd+l exec $menu
+
+    # Drag floating windows by holding down $mod and left mouse button.
+    # Resize them with right mouse button + $mod.
+    # Despite the name, also works for non-floating windows.
+    # Change normal to inverse to use left mouse button for resizing and right
+    # mouse button for dragging.
+    floating_modifier $mod normal
+
+    # Reload the configuration file
+    bindsym $mod+Shift+c reload
+    bindsym $modd+Shift+c reload
+
+    # Exit sway (logs you out of your Wayland session)
+    bindsym $mod+Shift+o exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
+    bindsym $modd+Shift+o exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit
+    #
+# Moving around:
+#
+    # Move your focus around
+    bindsym $mod+$left focus left
+    bindsym $mod+$down focus down
+    bindsym $mod+$up focus up
+    bindsym $mod+$right focus right
+
+    bindsym $modd+$left focus left
+    bindsym $modd+$down focus down
+    bindsym $modd+$up focus up
+    bindsym $modd+$right focus right
+    
+    # Or use $mod+[up|down|left|right]
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    bindsym $modd+Left focus left
+    bindsym $modd+Down focus down
+    bindsym $modd+Up focus up
+    bindsym $modd+Right focus right
+
+    # Move the focused window with the same, but add Shift
+    bindsym $mod+Shift+$left move left
+    bindsym $mod+Shift+$down move down
+    bindsym $mod+Shift+$up move up
+    bindsym $mod+Shift+$right move right
+
+    bindsym $modd+Shift+$left move left
+    bindsym $modd+Shift+$down move down
+    bindsym $modd+Shift+$up move up
+    bindsym $modd+Shift+$right move right
+
+    # Ditto, with arrow keys
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+    bindsym $modd+Shift+Left move left
+    bindsym $modd+Shift+Down move down
+    bindsym $modd+Shift+Up move up
+    bindsym $modd+Shift+Right move right
+#
+# Workspaces:
+#
+    # Switch to workspace
+    bindsym $mod+1 workspace number 1
+    bindsym $mod+2 workspace number 2
+    bindsym $mod+3 workspace number 3
+    bindsym $mod+4 workspace number 4
+    bindsym $mod+5 workspace number 5
+    bindsym $mod+6 workspace number 6
+    bindsym $mod+7 workspace number 7
+    bindsym $mod+8 workspace number 8
+    bindsym $mod+9 workspace number 9
+    bindsym $mod+0 workspace number 10
+
+    bindsym $modd+1 workspace number 1
+    bindsym $modd+2 workspace number 2
+    bindsym $modd+3 workspace number 3
+    bindsym $modd+4 workspace number 4
+    bindsym $modd+5 workspace number 5
+    bindsym $modd+6 workspace number 6
+    bindsym $modd+7 workspace number 7
+    bindsym $modd+8 workspace number 8
+    bindsym $modd+9 workspace number 9
+    bindsym $modd+0 workspace number 10
+    # Move focused container to workspace
+    bindsym $mod+Shift+1 move container to workspace number 1
+    bindsym $mod+Shift+2 move container to workspace number 2
+    bindsym $mod+Shift+3 move container to workspace number 3
+    bindsym $mod+Shift+4 move container to workspace number 4
+    bindsym $mod+Shift+5 move container to workspace number 5
+    bindsym $mod+Shift+6 move container to workspace number 6
+    bindsym $mod+Shift+7 move container to workspace number 7
+    bindsym $mod+Shift+8 move container to workspace number 8
+    bindsym $mod+Shift+9 move container to workspace number 9
+    bindsym $mod+Shift+0 move container to workspace number 10
+
+    bindsym $modd+Shift+1 move container to workspace number 1
+    bindsym $modd+Shift+2 move container to workspace number 2
+    bindsym $modd+Shift+3 move container to workspace number 3
+    bindsym $modd+Shift+4 move container to workspace number 4
+    bindsym $modd+Shift+5 move container to workspace number 5
+    bindsym $modd+Shift+6 move container to workspace number 6
+    bindsym $modd+Shift+7 move container to workspace number 7
+    bindsym $modd+Shift+8 move container to workspace number 8
+    bindsym $modd+Shift+9 move container to workspace number 9
+    bindsym $modd+Shift+0 move container to workspace number 10
+    # Note: workspaces can have any name you want, not just numbers.    
+#
+# Layout stuff:
+#
+    # You can "split" the current object of your focus with
+    # $mod+b or $mod+v, for horizontal and vertical splits
+    bindsym $mod+b splith
+    bindsym $mod+v splitv
+    
+    bindsym $modd+b splith
+    bindsym $modd+v splitv
+
+    # Switch the current container between different layout styles
+    # bindsym $mod+p layout stacking
+    # bindsym $mod+w layout tabbed
+    # bindsym $mod+? layout toggle split
+
+    # Make the current focus fullscreen
+    bindsym $mod+g fullscreen
+    bindsym $modd+g fullscreen
+
+    # Toggle the current focus between tiling and floating mode
+    # bindsym $mod+Shift+Mod4 floating toggle
+
+    # Swap focus between the tiling area and the floating area
+    # bindsym $mod+space focus mode_toggle
+
+    # Move focus to the parent container
+    # bindsym $mod+a focus parent
+#
+# Scratchpad:
+#
+    # Sway has a "scratchpad", which is a bag of holding for windows.
+    # You can send windows there and get them back later.
+
+    # Move the currently focused window to the scratchpad
+    # bindsym $mod+Shift+minus move scratchpad
+
+    # Show the next scratchpad window or hide the focused scratchpad window.
+    # If there are multiple scratchpad windows, this command cycles through them.
+    # bindsym $mod+minus scratchpad show
+#
+# Resizing containers:
+#
+mode "resize" {
+    # left will shrink the containers width
+    # right will grow the containers width
+    # up will shrink the containers height
+    # down will grow the containers height
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+
+    # Ditto, with arrow keys
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+
+    # Return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+bindsym $modd+r mode "resize"
+
+# Status Bar:
+#
+# Read `man 5 sway-bar` for more information about this section.
+bar {
+    position top
+
+    # When the status_command prints a new line to stdout, swaybar updates.
+    # The default just shows the current date and time.
+    status_command while date +'%Y-%m-%d %I:%M:%S %p'; do sleep 1; done
+
+    colors {
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
+    }
+}
+
+#theme
+
+# Colors
+set $noir	#000000
+set $violet	#4e387e
+set $rouge	#c23b22
+set $bleu	#3a479c
+set $vert 	#0a5f38
+set $vert_pale	#2d8869
+set $saumon 	#e0968b
+set $orange 	#d2691e
+set $jaune 	#eca927
+set $blanc 	#d5d195
+set $marron	#2b1a12
+
+# Background
+output * bg ./heart-scaled.jpg fit #000000
+#output * bg /home/moi/Documents/theme_gaslamp_killer/bannerfinal.jpg fit #000000
+#output * bg /home/moi/Documents/theme_gaslamp_killer/mdnight_music.jpg center #000000
+
+# TitleBorder - TitleBackground - Text - Indicator - Border
+client.focused $violet $marron $blanc $jaune $rouge
+client.focused_inactive $violet $noir $blanc $orange $vert
+client.unfocused $violet $noir $blanc $saumon $violet
+
+# Titlebar
+title_align center
+titlebar_padding 3
+titlebar_border_thickness 3
+
+# Borders
+set $border_size 7
+default_border pixel $border_size
+default_floating_border pixel $border_size
+smart_borders off
+for_window [app_id=".*"] border pixel $border_size
+
+# Gaps
+gaps inner 0
+gaps outer -5
+gaps bottom 5
+#smart_gaps inverse_outer
+
+# Font
+font "mononoki"
+
+include /etc/sway/config.d/*
